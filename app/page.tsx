@@ -1,242 +1,222 @@
-'use client'; // 버튼 클릭 등의 상호작용을 위해 최상단에 반드시 필요합니다.
+'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 
 export default function CorporateInsurancePage() {
   const form = useRef<HTMLFormElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // 메일 전송 함수
   const sendEmail = (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
-    if (!form.current) return;
-
-    // --- [중요] 아래 'YOUR_...' 부분들을 EmailJS에서 발급받은 실제 키로 바꿔주세요 ---
-    emailjs
-      .sendForm(
-        'service_gnz04f8', // 서비스 ID
-        'template_wptqdou', // 템플릿 ID
-        form.current,
-        'XhUyzaqw9GXuxiIiA', // 퍼블릭 키
-      )
-      .then(
-        (result) => {
-          alert('상담 신청이 완료되었습니다. 확인 후 신속히 연락드리겠습니다!');
-          form.current?.reset(); // 전송 성공 시 입력창 비우기
-        },
-        (error) => {
-          console.log(error.text);
-          alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
-        },
-      );
+    if (form.current) {
+      emailjs
+        .sendForm(
+          'service_gnz04f8',
+          'template_wptqdou',
+          form.current,
+          'XhUyzaqw9GXuiliA',
+        )
+        .then(() => {
+          alert(
+            '상담 신청이 완료되었습니다. 2026년 최신 자료와 함께 곧 연락드리겠습니다!',
+          );
+          form.current?.reset();
+        })
+        .catch((error) => {
+          alert('전송 중 오류가 발생했습니다. 다시 시도해 주세요.');
+        })
+        .finally(() => setIsSubmitting(false));
+    }
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 font-sans">
-      {/* 1. Header */}
-      <nav className="flex justify-between items-center px-8 py-6 border-b sticky top-0 bg-white/80 backdrop-blur-md z-50">
-        <div className="text-2xl font-bold text-blue-900">
-          Corporate Risk Lab
-        </div>
-        <div className="hidden md:flex space-x-8 font-medium text-slate-600">
-          <a href="#services" className="hover:text-blue-600 transition">
-            주요서비스
-          </a>
-          <a href="#industry" className="hover:text-blue-600 transition">
-            업종별전략
-          </a>
-          <a
-            href="#contact"
-            className="hover:text-blue-600 transition font-bold text-blue-700 underline underline-offset-4"
-          >
-            컨설팅신청
-          </a>
-        </div>
-      </nav>
-
-      {/* 2. Hero Section */}
-      <section className="bg-slate-900 text-white py-24 px-6 text-center">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
-            2026 법인 경영의 핵심,
+    <div className="min-h-screen bg-[#fafaf8] text-[#4a4a4a] font-sans selection:bg-green-100">
+      {/* Hero Section */}
+      <header className="py-20 lg:py-32 bg-[#f1f3ef]">
+        <div className="container mx-auto px-6 text-center">
+          <div className="inline-block px-4 py-1 mb-6 text-sm font-medium text-green-700 bg-green-100 rounded-full">
+            2026년도 개정 기업 지원 제도 완벽 반영
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-[#2d3436] mb-8 leading-tight">
+            성장하는 법인을 위한
             <br />
-            리스크 관리가 곧 성장의 발판입니다.
+            <span className="text-green-600 underline decoration-green-200 underline-offset-8">
+              가장 따뜻한 리스크 진단
+            </span>
           </h1>
-          <p className="text-xl text-slate-300 mb-10 max-w-2xl mx-auto leading-relaxed">
-            단순한 보험 가입을 넘어, 2026년 정부 정책 연계 및{' '}
-            <br className="hidden md:block" />
-            기업 인증 시너지를 통한 통합 리스크 솔루션을 제안합니다.
+          <p className="text-gray-500 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+            자동화 설비부터 식품 제조까지, 업종별 특화된 솔루션으로
+            <br />
+            대표님의 소중한 자산과 기업의 미래를 든든하게 지켜드립니다.
           </p>
-          <div className="flex flex-col md:flex-row justify-center gap-4">
+          <div className="flex flex-col md:flex-row gap-4 justify-center">
             <a
               href="#contact"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 rounded-full font-bold text-lg shadow-lg transition"
+              className="inline-block bg-[#84a59d] hover:bg-[#6b8d85] text-white font-bold py-4 px-10 rounded-2xl transition-all shadow-lg"
             >
-              무료 리스크 진단 신청
+              2026 기업 지원 전략 상담하기
             </a>
           </div>
         </div>
-      </section>
+      </header>
 
-      {/* 3. Key Services */}
-      <section
-        id="services"
-        className="py-24 px-6 max-w-7xl mx-auto text-slate-900"
-      >
+      {/* Core Services Section (보강된 내용) */}
+      <section className="py-24 container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            전문 리스크 관리 솔루션
+          <h2 className="text-3xl font-bold text-[#2d3436] mb-4">
+            어떤 고민을 도와드릴까요?
           </h2>
-          <p className="text-slate-500 text-lg">
-            기업의 생애 주기에 맞춘 3대 핵심 분야를 집중 관리합니다.
+          <p className="text-gray-400">
+            대표님들께서 가장 많이 문의하시는 3가지 핵심 영역입니다.
           </p>
         </div>
-        <div className="grid md:grid-cols-3 gap-10 text-slate-900">
-          <div className="p-10 bg-slate-50 rounded-3xl border border-slate-100 hover:shadow-xl transition">
-            <h3 className="text-2xl font-bold mb-4 text-blue-900">
-              정부지원사업 연계
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="p-10 bg-white rounded-[2.5rem] shadow-sm border border-gray-100">
+            <div className="text-3xl mb-6">📑</div>
+            <h3 className="text-xl font-bold mb-4 text-[#2d3436]">
+              정부지원사업 & 인증
             </h3>
-            <p className="text-slate-600 leading-relaxed">
-              2026년 정부 지원금 수혜를 위한 보험 전략 및 기업 가점 확보를 위한
-              경영 공시 최적화.
-            </p>
+            <ul className="text-gray-500 text-sm space-y-3 leading-relaxed">
+              <li>• 2026년 개정 산업진흥 정책 매칭</li>
+              <li>• 스마트공장/ISO 인증 가점 전략</li>
+              <li>• 기술금융 및 정책자금 활용 방안</li>
+            </ul>
           </div>
-          <div className="p-10 bg-slate-50 rounded-3xl border border-slate-100 hover:shadow-xl transition">
-            <h3 className="text-2xl font-bold mb-4 text-blue-900">
-              CEO 은퇴 및 절세
+          <div className="p-10 bg-white rounded-[2.5rem] shadow-sm border border-gray-100">
+            <div className="text-3xl mb-6">🔍</div>
+            <h3 className="text-xl font-bold mb-4 text-[#2d3436]">
+              노무 및 산재 리스크
             </h3>
-            <p className="text-slate-600 leading-relaxed">
-              합법적 법인세 절감, 가지급금 정리, 가업 승계를 위한 상속·증여세
-              재원 마련 전략.
-            </p>
+            <ul className="text-gray-500 text-sm space-y-3 leading-relaxed">
+              <li>• 중대재해처벌법 대응 매뉴얼 수립</li>
+              <li>• 제조 현장(FA/식품) 맞춤형 안전 관리</li>
+              <li>• 효율적인 임원/근로자 복지 설계</li>
+            </ul>
           </div>
-          <div className="p-10 bg-slate-50 rounded-3xl border border-slate-100 hover:shadow-xl transition">
-            <h3 className="text-2xl font-bold mb-4 text-blue-900">
-              기업 인증 시너지
+          <div className="p-10 bg-white rounded-[2.5rem] shadow-sm border border-gray-100">
+            <div className="text-3xl mb-6">⚖️</div>
+            <h3 className="text-xl font-bold mb-4 text-[#2d3436]">
+              절세 및 자산 승계
             </h3>
-            <p className="text-slate-600 leading-relaxed">
-              ISO, MAIN-BIZ 인증 유지 및 산업재해 발생 시 기업 손실을 최소화하는
-              포트폴리오.
-            </p>
+            <ul className="text-gray-500 text-sm space-y-3 leading-relaxed">
+              <li>• 가지급금/이익잉여금 최적 정리</li>
+              <li>• 가업 상속 공제 및 증여 플랜</li>
+              <li>• 법인세 절감을 위한 맞춤 세무 진단</li>
+            </ul>
           </div>
         </div>
       </section>
 
-      {/* 4. Industry Focused Strategy */}
-      <section id="industry" className="py-24 bg-slate-50 px-6 text-slate-900">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                업종의 특수성을 <br />
-                누구보다 잘 압니다.
-              </h2>
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-bold text-xl mb-2 text-blue-800">
-                    제조 및 자동화 설비(FA)
-                  </h4>
-                  <p className="text-slate-600">
-                    고가 설비 리스크 담보 및 핵심 인력 이탈 방지를 위한 복지
-                    플랜
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-bold text-xl mb-2 text-blue-800">
-                    식품 가공 및 유통
-                  </h4>
-                  <p className="text-slate-600">
-                    PL(생산물배상책임) 및 HACCP 인증 유지를 위한 안전 설계
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="bg-blue-900 rounded-3xl p-10 text-white shadow-2xl">
-              <h4 className="text-2xl font-bold mb-6">2026 법인 체크리스트</h4>
-              <ul className="space-y-4 text-blue-100">
-                <li>✓ 2026 세법 개정안 절세 포인트 확인</li>
-                <li>✓ 정부 지원금 신청용 보험 요건 충족</li>
-                <li>✓ 핵심 인력 장기근속 보상 설계</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Contact Form Section (이 부분이 핵심입니다) */}
-      <section id="contact" className="py-24 px-6 max-w-4xl mx-auto">
-        <div className="bg-white border-4 border-slate-900 p-10 md:p-16 rounded-[2rem] shadow-[20px_20px_0px_0px_#1e293b] text-slate-900">
-          <h2 className="text-3xl font-bold text-center mb-10">
-            전문 컨설팅 신청
+      {/* FAQ Section (추가된 부분) */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <h2 className="text-2xl font-bold text-center mb-12">
+            많이 궁금해하시는 질문
           </h2>
-
-          <form ref={form} onSubmit={sendEmail} className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700">
-                  법인명
-                </label>
-                <input
-                  name="company_name"
-                  type="text"
-                  required
-                  placeholder="예: (주)대한상사"
-                  className="w-full p-4 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500 transition text-slate-900"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700">
-                  성함 및 직함
-                </label>
-                <input
-                  name="user_name"
-                  type="text"
-                  required
-                  placeholder="예: 홍길동 대표"
-                  className="w-full p-4 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500 transition text-slate-900"
-                />
-              </div>
+          <div className="space-y-6">
+            <div className="bg-[#fafaf8] p-6 rounded-2xl">
+              <h4 className="font-bold text-[#84a59d] mb-2">
+                Q. 상담은 어떤 방식으로 진행되나요?
+              </h4>
+              <p className="text-sm text-gray-500">
+                기초 정보를 토대로 1차 유선 상담을 진행한 후, 필요한 경우 기업을
+                직접 방문하여 상세한 진단 보고서를 전달해 드립니다.
+              </p>
             </div>
-            <div className="space-y-2">
-              <label className="text-sm font-bold text-slate-700">연락처</label>
-              <input
-                name="phone_number"
-                type="tel"
-                required
-                placeholder="010-0000-0000"
-                className="w-full p-4 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500 transition text-slate-900"
-              />
+            <div className="bg-[#fafaf8] p-6 rounded-2xl">
+              <h4 className="font-bold text-[#84a59d] mb-2">
+                Q. 상담 비용이 발생하나요?
+              </h4>
+              <p className="text-sm text-gray-500">
+                기초 진단 및 2026년도 정부지원사업 매칭 리포트 작성은 무료로
+                지원해 드립니다.
+              </p>
             </div>
-            <div className="space-y-2">
-              <label className="text-sm font-bold text-slate-700">
-                상담 관심 분야
-              </label>
-              <select
-                name="interest"
-                className="w-full p-4 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500 transition bg-white text-slate-900"
-              >
-                <option>2026 정부지원사업 및 인증 연계</option>
-                <option>CEO 은퇴 및 절세 전략</option>
-                <option>단체보험 및 산재 리스크 관리</option>
-                <option>기타 통합 법인 진단</option>
-              </select>
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-slate-900 text-white py-5 rounded-xl font-bold text-xl hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-1"
-            >
-              컨설팅 리포트 무료 신청하기
-            </button>
-          </form>
+          </div>
         </div>
       </section>
 
-      <footer className="py-12 text-center text-slate-500 border-t bg-slate-50">
-        <p className="mb-2 font-bold text-slate-800">Corporate Risk Lab</p>
-        <p className="text-sm tracking-widest uppercase">
-          &copy; 2026 RISK MANAGEMENT PARTNERS
-        </p>
+      {/* Contact Form Section */}
+      <section id="contact" className="py-24 bg-[#f1f3ef]">
+        <div className="container mx-auto px-6">
+          <div className="max-w-2xl mx-auto bg-white p-10 md:p-16 rounded-[3rem] shadow-xl">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-[#2d3436] mb-4">
+                맞춤 전략 신청
+              </h2>
+              <p className="text-gray-400">
+                정보를 남겨주시면 정성을 다해 준비하겠습니다.
+              </p>
+            </div>
+
+            <form ref={form} onSubmit={sendEmail} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-2 ml-1">
+                    회사명
+                  </label>
+                  <input
+                    type="text"
+                    name="company_name"
+                    required
+                    className="w-full px-5 py-4 rounded-2xl bg-gray-50 border-none focus:ring-2 focus:ring-[#84a59d] outline-none transition-all"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-2 ml-1">
+                    성함
+                  </label>
+                  <input
+                    type="text"
+                    name="user_name"
+                    required
+                    className="w-full px-5 py-4 rounded-2xl bg-gray-50 border-none focus:ring-2 focus:ring-[#84a59d] outline-none transition-all"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-2 ml-1">
+                  연락처
+                </label>
+                <input
+                  type="tel"
+                  name="user_phone"
+                  required
+                  className="w-full px-5 py-4 rounded-2xl bg-gray-50 border-none focus:ring-2 focus:ring-[#84a59d] outline-none transition-all"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-2 ml-1">
+                  관심 분야
+                </label>
+                <select
+                  name="interest"
+                  className="w-full px-5 py-4 rounded-2xl bg-gray-50 border-none focus:ring-2 focus:ring-[#84a59d] outline-none transition-all"
+                >
+                  <option>2026 정부지원사업 및 인증</option>
+                  <option>산업재해 및 기업 보험 리스크</option>
+                  <option>법인세 절세 및 가업 승계</option>
+                </select>
+              </div>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full py-5 rounded-2xl font-bold text-white transition-all ${isSubmitting ? 'bg-gray-300' : 'bg-[#f28482] hover:bg-[#f59a98] shadow-lg'}`}
+              >
+                {isSubmitting
+                  ? '전송 중입니다...'
+                  : '무료 진단 리포트 신청하기'}
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <footer className="py-12 text-center text-gray-300 text-sm">
+        <p>© 2026 Corporate Strategy Lab. All rights reserved.</p>
       </footer>
     </div>
   );
