@@ -17,10 +17,10 @@ export default function CorporateInsurancePage() {
     if (form.current) {
       emailjs
         .sendForm(
-          'YOUR_SERVICE_ID',
-          'YOUR_TEMPLATE_ID',
+          'service)gnz04f8',
+          'template_wptqdou',
           form.current,
-          'YOUR_PUBLIC_KEY',
+          'XhUyzaqw9GXuxiliA',
         )
         .then(() => {
           alert('신청 완료! 곧 연락드리겠습니다.');
