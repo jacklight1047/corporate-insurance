@@ -16,20 +16,20 @@ export default function CorporateInsurancePage() {
     setIsSubmitting(true);
 
     if (form.current) {
-      // 빌드 에러 방지: 환경 변수가 없을 경우를 대비해 기본값('')을 설정하거나 확정합니다.
-      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || '';
-      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || '';
-      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || '';
-
       emailjs
-        .sendForm(serviceId, templateId, form.current, publicKey)
+        .sendForm(
+          'service_gnz04f8', // <-- 본인의 Service ID 직접 입력 (따옴표 필수)
+          'template_wptqdou', // <-- 본인의 Template ID 직접 입력 (따옴표 필수)
+          form.current,
+          'XhUyzaqw9GXuxiliA', // <-- [Account] -> [General]에 있는 Public Key 직접 입력
+        )
         .then(() => {
           alert('신청 완료! 곧 연락드리겠습니다.');
           form.current?.reset();
         })
         .catch((error) => {
           console.error('메일 전송 실패 상세:', error);
-          alert('전송에 실패했습니다. 설정을 확인해주세요.');
+          alert('전송 실패. 설정을 확인해주세요.');
         })
         .finally(() => setIsSubmitting(false));
     }
