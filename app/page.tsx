@@ -17,7 +17,7 @@ export default function CorporateInsurancePage() {
     if (form.current) {
       emailjs
         .sendForm(
-          'service)gnz04f8',
+          'service_gnz04f8',
           'template_wptqdou',
           form.current,
           'XhUyzaqw9GXuxiliA',
