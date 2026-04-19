@@ -16,21 +16,20 @@ export default function CorporateInsurancePage() {
     setIsSubmitting(true);
 
     if (form.current) {
-      // Vercel 환경 변수를 사용하여 메일 전송
       emailjs
         .sendForm(
-          process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!, // 등록한 환경 변수 사용
-          process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!, // 등록한 환경 변수 사용
+          'service_gnz04f8', // <-- 여기에 직접 Service ID 입력
+          'template_wptqdou', // <-- 여기에 직접 Template ID 입력
           form.current,
-          process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!, // 등록한 환경 변수 사용
+          'XhUyzaqw9GXuxiliA', // <-- 여기에 직접 Public Key 입력
         )
         .then(() => {
           alert('신청 완료! 곧 연락드리겠습니다.');
           form.current?.reset();
         })
         .catch((error) => {
-          console.error('메일 전송 실패:', error);
-          alert('전송에 실패했습니다. 잠시 후 다시 시도해주세요.');
+          console.error('메일 전송 실패 상세:', error);
+          alert('전송에 실패했습니다. ID 값을 확인해주세요.');
         })
         .finally(() => setIsSubmitting(false));
     }
