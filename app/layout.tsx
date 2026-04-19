@@ -1,4 +1,4 @@
-import { Analytics } from '@vercel/analytics/react'; // 1. 이 줄을 맨 위에 추가
+import { GoogleAnalytics } from '@next/third-parties/google'; // 1. 이 줄을 맨 위에 추가
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
@@ -30,7 +30,8 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         {children}
-        <Analytics /> {/* 2. 이 줄을 body 태그 닫히기 직전에 추가 */}
+        <GoogleAnalytics gaId="GTM-5C5JPPJ5" />{' '}
+        {/* 2. 이 줄을 body 태그 닫히기 직전에 추가 */}
       </body>
     </html>
   );
