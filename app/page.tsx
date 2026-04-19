@@ -14,17 +14,23 @@ export default function CorporateInsurancePage() {
   const sendEmail = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
     if (form.current) {
+      // Vercel 환경 변수를 사용하여 메일 전송
       emailjs
         .sendForm(
-          'service_gnz04f8',
-          'template_wptqdou',
+          process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!, // 등록한 환경 변수 사용
+          process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!, // 등록한 환경 변수 사용
           form.current,
-          'XhUyzaqw9GXuxiliA',
+          process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!, // 등록한 환경 변수 사용
         )
         .then(() => {
           alert('신청 완료! 곧 연락드리겠습니다.');
           form.current?.reset();
+        })
+        .catch((error) => {
+          console.error('메일 전송 실패:', error);
+          alert('전송에 실패했습니다. 잠시 후 다시 시도해주세요.');
         })
         .finally(() => setIsSubmitting(false));
     }
@@ -158,7 +164,7 @@ export default function CorporateInsurancePage() {
         </div>
       </section>
 
-      {/* FAQ 섹션 (새로 추가된 부분) */}
+      {/* FAQ 섹션 */}
       <section className="py-16 bg-white border-y border-gray-50">
         <div className="container mx-auto px-6 max-w-3xl">
           <h2 className="text-2xl font-bold mb-10 text-center text-[#2d3436]">
