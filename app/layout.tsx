@@ -30,7 +30,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         {children}
-        <GoogleAnalytics gaId="GTM-5C5JPPJ5" />{' '}
+        <GoogleAnalytics gaId="GTM-K3ZZ2MPV" />{' '}
         {/* 2. 이 줄을 body 태그 닫히기 직전에 추가 */}
       </body>
     </html>
